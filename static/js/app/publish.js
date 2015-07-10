@@ -108,4 +108,48 @@ $(function()
 		}
 	});
 
+	// 难度控件
+
+	$('#question-difficulty').barrating();
+
+	// 答题选项编辑对话框
+
+	$('input.dlg-control').iCheck({
+		checkboxClass: 'icheckbox_square-blue',
+		radioClass: 'iradio_square-blue',
+		increaseArea: '20%' // optional
+	});
+
+	$('#enable-quiz-countdown').on('ifChecked', function(){
+		$('#quiz-countdown .quiz-countdown-input').show();
+	});
+
+	$('#enable-quiz-countdown').on('ifUnchecked', function(){
+		$('#quiz-countdown .quiz-countdown-input').hide();
+	});	
+
+	$('#quiz-type .dropdown-menu li a').on('click', function(e){
+		var sel = $(this);
+		var selText = sel.text();
+		var quizType = sel.attr('data-quiz-type');
+  		
+  		sel.parents('.btn-group').find('.dropdown-toggle span.quiz-type-select').text(selText);
+  		$('#quiz-type').attr('data-quiz-type', quizType);
+
+  		var optionPage = $('.quiz-option-pages li.quiz-option-page[data-quiz-type="' + quizType + '"]');
+  		if(optionPage.length) {
+  			$(optionPage)
+  				.removeClass('hidden')
+  				.siblings('.quiz-option-page').addClass('hidden');
+  		}
+  		else
+  		{
+			$('.quiz-option-pages li.quiz-option-page.default-page')
+				.removeClass('hidden')
+				.siblings('.quiz-option-page').addClass('hidden');  			
+  		}
+
+  		e.preventDefault();
+	});
+
 });

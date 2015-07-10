@@ -73,6 +73,129 @@
 										<?php } ?>
 									</div>
 								</div>
+								<!-- end 问题补充 -->
+
+								<h3><?php _e('问题难度系数'); ?>:</h3>
+								<div>
+									<select id="question-difficulty" name="question-difficulty">
+									  <option value="1">1</option>
+									  <option value="2">2</option>
+									  <option value="3" selected="selected">3</option>
+									  <option value="4">4</option>
+									  <option value="5">5</option>
+									  <option value="6">6</option>
+									  <option value="7">7</option>
+									  <option value="8">8</option>
+									  <option value="9">9</option>
+									  <option value="10">10</option>
+									</select>
+								</div>
+								<!-- end 问题难度 -->								
+
+								<h3><?php _e('答题选项（可选）'); ?>:</h3>
+								<input type="hidden" name="quiz-content" value=""></input>
+								<div class="quiz-content-container">
+									<div class="quiz-preview">
+										
+									</div>
+									<a id="edit-quiz-options" class="btn btn-success" type="button" data-toggle="modal" data-target="#dlg-quiz-options"><?php _e('编辑答题选项'); ?></a>
+
+									<!-- 选项编辑对话框 -->
+									<div class="modal fade" id="dlg-quiz-options" tabindex="-1" role="dialog" aria-labelledby="dlg-quiz-option-label">
+									  <div class="modal-dialog" role="document">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <a type="button" class="close icon icon-delete" data-dismiss="modal" aria-hidden="true"></a>
+									        <h4 class="modal-title" id="dlg-quiz-option-label"><?php _e('编辑答题选项'); ?></h4>
+									      </div>
+									      <div class="modal-body">
+									      	<div class="quiz-option-common">
+									      		<div id="quiz-type" class= "col-xs-4">
+													<div class="btn-group"> 
+														<a class="btn btn-default dropdown-toggle btn-select" data-toggle="dropdown" href="#">
+															<span class="quiz-type-select"><?php _e('选择答题类型 '); ?></span>
+															<span class="caret"></span>
+														</a>
+											            <ul class="dropdown-menu">
+											                <li><a href="#" data-quiz-type="1"><?php _e('单项选择'); ?></a></li>
+											                <li><a href="#" data-quiz-type="2"><?php _e('多项选择'); ?></a></li>
+											                <li><a href="#" data-quiz-type="3"><?php _e('成语字谜'); ?></a></li>
+											                <li><a href="#" data-quiz-type="4"><?php _e('完形填空'); ?></a></li>
+											            </ul>
+											        </div>
+										        </div>
+
+										        <div id="quiz-countdown" class="col-xs-8">
+										        	<div class="col-xs-4 dlg-control">
+										        		<input id="enable-quiz-countdown" class="dlg-control" type="checkbox" name="enable-quiz-countdown"></input>
+										        		<label>
+										        			<?php _e('限时答题'); ?>	
+										        		</label>
+										        	</div>
+										        	<div class="quiz-countdown-input col-xs-8">
+										        		<input id="quiz-countdown-value" class="form-control" type="text" name="quiz-countdown" value=""></input>
+										        		<label class="dlg-control"><?php _e('秒'); ?></label>
+										        	</div>
+										        </div>
+									      	</div>
+									      	<div class="panel panel-default quiz-option-pages">
+												<div class="panel-body">
+													<ul>
+														<li class="quiz-option-page default-page" data-quiz-type="0">
+															<span><?php _e('请先选择答题类型'); ?></span>
+														</li>
+														<li class="quiz-option-page hidden" data-quiz-type="1">
+															<table class="table">
+														        <thead>
+														          <tr>
+														            <th><?php _e('选项'); ?></th>
+														            <th><?php _e('答案'); ?></th>
+														            <th><?php _e('操作');?></th>
+														          </tr>
+														        </thead>
+														        <tbody>
+														          <tr class="quiz-option-single">
+														            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
+														            <td><input class="dlg-control" type="radio" name="quiz-option-single-answer"></td>
+														            <td><a href="#" class="btn btn-danger btn-sm">删除</a></td>
+														          </tr>
+														          <tr class="quiz-option-single">
+														            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
+														            <td><input class="dlg-control" type="radio" name="quiz-option-single-answer"></td>
+														            <td><a href="#" class="btn btn-danger btn-sm">删除</a></td>
+														          </tr>
+														          <tr>
+														            <td><span class="text-color-999">提示：选项个数不能少于2个，不能多于15个</span></td>
+														            <td></td>
+														            <td><a href="#" class="btn btn-success btn-sm">添加</a></td>
+														          </tr>
+														        </tbody>
+														    </table>
+														</li>
+														<li class="quiz-option-page hidden" data-quiz-type="2">
+															多选
+														</li>
+														<li class="quiz-option-page hidden" data-quiz-type="3">
+															字谜
+														</li>
+														<li class="quiz-option-page hidden" data-quiz-type="4">
+															填空
+														</li>
+													</ul>
+												</div>
+									      	</div>
+									      </div>
+									      <div class="modal-footer">
+									        <button type="button" class="btn btn-primary" data-dismiss="modal"><?php _e('确认保存'); ?></button>
+									      </div>
+									    </div>
+									  </div>
+									</div>
+									<!-- end 选项编辑对话框-->
+								</div>
+
+								<!-- end 问题难度 -->
+
 								<?php if (!$this->question_info['question_id']) { ?>
 								<h3><?php _e('添加话题'); ?>:</h3>
 								<div class="aw-topic-bar" data-type="publish">

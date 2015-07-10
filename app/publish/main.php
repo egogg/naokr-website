@@ -96,6 +96,10 @@ class main extends AWS_CONTROLLER
 		TPL::assign('human_valid', human_valid('question_valid_hour'));
 
 		TPL::import_js('js/app/publish.js');
+		TPL::import_js('js/jquery.barrating.min.js');
+		TPL::import_css('css/publish.css');
+		TPL::import_js('js/icheck.min.js');
+		TPL::import_css('css/icheck/square/blue.css');
 
 		if (get_setting('advanced_editor_enable') == 'Y')
 		{
