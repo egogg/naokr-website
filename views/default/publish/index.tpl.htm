@@ -109,6 +109,10 @@
 									        <h4 class="modal-title" id="dlg-quiz-option-label"><?php _e('编辑答题选项'); ?></h4>
 									      </div>
 									      <div class="modal-body">
+									      	<div id="quiz-option-error-message" class="alert alert-danger hidden error_message">
+									      		<i class="icon icon-delete"></i>
+									      		<em></em>
+									      	</div>
 									      	<div class="quiz-option-common">
 									      		<div id="quiz-type" class= "col-xs-4">
 													<div class="btn-group"> 
@@ -124,7 +128,6 @@
 											            </ul>
 											        </div>
 										        </div>
-
 										        <div id="quiz-countdown" class="col-xs-8">
 										        	<div class="col-xs-4 dlg-control">
 										        		<input id="enable-quiz-countdown" class="dlg-control" type="checkbox" name="enable-quiz-countdown"></input>
@@ -153,33 +156,89 @@
 														            <th><?php _e('操作');?></th>
 														          </tr>
 														        </thead>
-														        <tbody>
+														        <tbody class="quiz-option-single-list">
 														          <tr class="quiz-option-single">
 														            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
 														            <td><input class="dlg-control" type="radio" name="quiz-option-single-answer"></td>
-														            <td><a href="#" class="btn btn-danger btn-sm">删除</a></td>
+														            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
 														          </tr>
 														          <tr class="quiz-option-single">
 														            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
 														            <td><input class="dlg-control" type="radio" name="quiz-option-single-answer"></td>
-														            <td><a href="#" class="btn btn-danger btn-sm">删除</a></td>
+														            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
 														          </tr>
-														          <tr>
+														          <tr class="quiz-option-single-add">
 														            <td><span class="text-color-999">提示：选项个数不能少于2个，不能多于15个</span></td>
 														            <td></td>
-														            <td><a href="#" class="btn btn-success btn-sm">添加</a></td>
+														            <td><a href="#" class="btn btn-success btn-sm add">添加</a></td>
 														          </tr>
 														        </tbody>
 														    </table>
 														</li>
 														<li class="quiz-option-page hidden" data-quiz-type="2">
-															多选
+															<table class="table">
+														        <thead>
+														          <tr>
+														            <th><?php _e('选项'); ?></th>
+														            <th><?php _e('答案'); ?></th>
+														            <th><?php _e('操作');?></th>
+														          </tr>
+														        </thead>
+														        <tbody class="quiz-option-multiple-list">
+														          <tr class="quiz-option-multiple">
+														            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
+														            <td><input class="dlg-control" type="checkbox" name="quiz-option-multiple-answer"></td>
+														            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
+														          </tr>
+														          <tr class="quiz-option-multiple">
+														            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
+														            <td><input class="dlg-control" type="checkbox" name="quiz-option-multiple-answer"></td>
+														            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
+														          </tr>
+														          <tr class="quiz-option-multiple-add">
+														            <td><span class="text-color-999">提示：选项个数不能少于2个，不能多于15个</span></td>
+														            <td></td>
+														            <td><a href="#" class="btn btn-success btn-sm add">添加</a></td>
+														          </tr>
+														        </tbody>
+														    </table>
 														</li>
 														<li class="quiz-option-page hidden" data-quiz-type="3">
-															字谜
+															<div class="quiz-option-crossword-answer">
+																<input type="text" class="form-control" name="quiz-option-crossword-answer" placeholder="字谜答案">
+																<span class="text-color-999">您设计的字谜答案，一般不要超过6个汉字</span>
+															</div>
+															<div class="quiz-option-crossword-words">
+																<textarea class="form-control" name="quiz-option-crossword-words" id="quiz-option-crossword-words" rows="4" placeholder="字谜可选汉字"></textarea>
+																<div>
+																	<span class="text-color-999">可选汉字个数请控制为答案长度＊8</span>
+																	<a href="#" class="btn btn-success btn-sm" id="quiz-option-crossword-auto"><?php _e('随机生成'); ?></a>
+																	<a href="#" class="btn btn-success btn-sm" id="quiz-option-crossword-shuffle"><?php _e('打乱内容'); ?></a>
+																</div>
+															</div>
 														</li>
 														<li class="quiz-option-page hidden" data-quiz-type="4">
-															填空
+															<table class="table">
+														        <thead>
+														          <tr>
+														            <th><?php _e('标签'); ?></th>
+														            <th><?php _e('答案'); ?></th>
+														            <th><?php _e('操作');?></th>
+														          </tr>
+														        </thead>
+														        <tbody class="quiz-option-textinput-list">
+														          <tr class="quiz-option-textinput">
+														          	<td><input class="form-control" type="text" placeholder="填空标签" data-textinput-field="label"></td>
+														            <td><input class="form-control" type="text" placeholder="填空答案" data-textinput-field="answer"></td>
+														            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
+														          </tr>
+														          <tr class="quiz-option-textinput-add">
+														            <td><span class="text-color-999">提示：填空个数不能多于6个</span></td>
+														            <td></td>
+														            <td><a href="#" class="btn btn-success btn-sm add">添加</a></td>
+														          </tr>
+														        </tbody>
+														    </table>
 														</li>
 													</ul>
 												</div>

@@ -24,9 +24,17 @@
 
 /* 题目选项编辑对话框 */
 
+#quiz-option-error-message i {
+  cursor: pointer;
+}
+
 .quiz-option-common {
   min-height: 40px;
   margin-bottom: 10px;
+}
+
+#quiz-type {
+  padding-left: 0px;
 }
 
 #quiz-type .dropdown-toggle {
@@ -50,7 +58,6 @@
 }
 
 .quiz-option-pages {
-  margin: 0 0 0 15px;
   min-height: 250px;
 }
 
@@ -60,4 +67,17 @@
 
 .quiz-option-page table input {
   margin-bottom: 0px;
+}
+
+.quiz-option-crossword-answer {
+  margin-bottom: 10px;
+}
+
+.quiz-option-crossword-answer input {
+  margin-bottom: 0;
+}
+
+#quiz-option-crossword-auto, #quiz-option-crossword-shuffle {
+  float: right;
+  margin-left: 15px;
 }
