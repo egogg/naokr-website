@@ -28,6 +28,14 @@
   cursor: pointer;
 }
 
+#quiz-summary div {
+  margin-bottom: 15px;
+}
+
+#quiz-summary i {
+  margin-right: 6px;
+}
+
 .quiz-option-common {
   min-height: 40px;
   margin-bottom: 10px;
@@ -44,11 +52,11 @@
   border-radius: 4px;
 }
 
-#quiz-countdown .quiz-countdown-input {
+#quiz-countdown-input {
   display: none;
 }
 
-.quiz-countdown-input input {
+#quiz-countdown-value {
   width: 50%;
   display: inline-block;
 }

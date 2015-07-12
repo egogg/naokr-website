@@ -1,0 +1,9 @@
+.quiz-single-selection .quiz-option.checked .quiz-option-mark {
+	display: inline-block;
+	float: right;
+	color: #4cae4c;
+}
+
+.quiz-single-selection .quiz-option .quiz-option-mark {
+	display: none;
+}

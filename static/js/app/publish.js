@@ -112,7 +112,28 @@ $(function()
 
 	$('#question-difficulty').barrating();
 
+	// 解析答案
+
+	// $('.quiz-preview').nkrQuiz({
+ //        "mode" : "single",
+ //        "data" : $.parseJSON($('#quiz-content').val())
+ //    });
+
 	// 答题选项编辑对话框
+
+	function ShowErrorMessage(msg) {
+		$('#quiz-option-error-message')
+			.removeClass('hidden')
+			.fadeIn()
+			.find('em').text(msg);
+	}
+
+	function DismissErrorMessage() {
+		$('#quiz-option-error-message')
+			.fadeOut()
+			.addClass('hidden')
+			.find('em').text('');
+	}
 
 	$('input.dlg-control').iCheck({
 		checkboxClass: 'icheckbox_square-blue',
@@ -121,11 +142,11 @@ $(function()
 	});
 
 	$('#enable-quiz-countdown').on('ifChecked', function(){
-		$('#quiz-countdown .quiz-countdown-input').show();
+		$('#quiz-countdown-input').show().find('input').focus();
 	});
 
 	$('#enable-quiz-countdown').on('ifUnchecked', function(){
-		$('#quiz-countdown .quiz-countdown-input').hide();
+		$('#quiz-countdown-input').hide();
 	});	
 
 	$('#quiz-type .dropdown-menu li a').on('click', function(e){
@@ -246,15 +267,9 @@ $(function()
 
 			$('.quiz-option-crossword-words textarea[name="quiz-option-crossword-words"]').val(words.shuffle());
 
-			$('#quiz-option-error-message')
-				.addClass('hidden')
-				.fadeOut()
-				.find('em').text('');
+			DismissErrorMessage();
 		} else {
-			$('#quiz-option-error-message')
-				.removeClass('hidden')
-				.fadeIn()
-				.find('em').text('请先输入字谜答案');
+			ShowErrorMessage('请先输入字谜答案');
 		}
 
 		e.preventDefault();
@@ -303,5 +318,145 @@ $(function()
 
 		e.preventDefault();
 	});
+
+	// 确认保存设置
+
+	$('#quiz-options-save').on('click', function(e) {
+
+		// 检查答题类型
+
+		var quizType = $('#quiz-type').attr('data-quiz-type');
+		var countdown = 0;
+		if($('#quiz-countdown-input').is(':visible')) {
+			var countdownInput = $('#quiz-countdown-value').val().trim();
+
+			if(Math.floor(countdownInput) == countdownInput && $.isNumeric(countdownInput)) {
+				countdown = countdownInput;
+				if(countdown < 10) {
+					ShowErrorMessage('答题时间不能少于10秒');
+					return;
+				}
+			}
+			else {
+				$('#quiz-countdown-value').focus();
+				ShowErrorMessage('请输入有效的答题时限');
+
+				return;
+			}
+		}
+
+		var quizType = '';
+		var quizSummary = '';
+		var isValidOption = true;
+		var hasAnswer = false;
+		var options = [];
+		var answers = [];
+		if(quizType == 1) {
+			// 单项选择
+			$('.quiz-option-single').each(function(i, element){
+				var $elements = $(element).children();
+				var optionInput = $($elements[0]).find('input');
+				var optionValue = optionInput.val().trim();
+				
+				if(!optionValue.length) {
+					optionInput.focus();
+					ShowErrorMessage('请输入答题选项');
+
+					isValidOption = false;
+					return;
+				}
+
+				options = options.concat({'content' : optionValue});
+
+				var isAnswer = $($elements[1]).find('.iradio_square-blue').hasClass('checked');
+				answers = answers.concat({'answer':isAnswer, 'score' : isAnswer ? 10 : 0});
+
+				hasAnswer |= isAnswer;
+			});
+
+			if(!isValidOption) {
+				return;
+			}
+
+			if(!hasAnswer) {
+
+				ShowErrorMessage('请设置一个答案');
+				return;
+			}
+
+			quizSummary  = '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">单选</span></div>';
+
+			quizType = 'singleSelection';
+
+		} else if(quizType == 2) {
+			// 多项选择
+			$('.quiz-option-multiple').each(function(i, element){
+				var $elements = $(element).children();
+				var optionInput = $($elements[0]).find('input');
+				var optionValue = optionInput.val().trim();
+				
+				if(!optionValue.length) {
+					optionInput.focus();
+					ShowErrorMessage('请输入答题选项');
+
+					isValidOption = false;
+					return;
+				}
+
+				options = options.concat({'content' : optionValue});
+
+				var isAnswer = $($elements[1]).find('.icheckbox_square-blue').hasClass('checked');
+				answers = answers.concat({'answer':isAnswer, 'score' : isAnswer ? 10 : 0});
+
+				hasAnswer |= isAnswer;
+			});
+
+			if(!isValidOption) {
+				return;
+			}
+
+			if(!hasAnswer) {
+
+				ShowErrorMessage('请至少设置一个答案');
+				return;
+			}
+
+			quizSummary  = '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">多选</span></div>';
+			quizType = 'multipleSelection';
+		} else if(quizType == 3) {
+			// 成语字谜
+		} else if(quizType == 4) {
+
+		} else {
+			ShowErrorMessage('请选择答题类型');
+
+			return;
+		}
+
+		DismissErrorMessage();
+
+		if(countdown > 0) {
+			quizSummary += '<div><i class="glyphicon glyphicon-time"></i>限时：<strong>' + countdown + '</strong> 秒</div>';
+		}
+
+		var quizItem = {
+			'type' : quizType,
+			'countdown' : countdown,
+			'description' : '',
+			'options' : options,
+			'answers' : answers
+		};
+
+		$('#quiz-content').val(JSON.stringify(quizItem));
+		$('#quiz-summary').html(quizSummary);
+		$('.quiz-preview').nkrQuiz({
+	        "mode" : "single",
+	        "showSubmit" : false,
+	        "data" : $.parseJSON($('#quiz-content').val())
+	    });
+		$('#dlg-quiz-options').modal('hide');
+
+		e.preventDefault();
+	})
 
 });

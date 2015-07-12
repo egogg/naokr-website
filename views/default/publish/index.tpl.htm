@@ -93,12 +93,19 @@
 								<!-- end 问题难度 -->								
 
 								<h3><?php _e('答题选项（可选）'); ?>:</h3>
-								<input type="hidden" name="quiz-content" value=""></input>
+								<input id="quiz-content" type="hidden" name="quiz-content" value=""></input>
 								<div class="quiz-content-container">
-									<div class="quiz-preview">
-										
+									<div class="panel panel-default">
+										<div class="panel-body">
+											<div id="quiz-summary">
+												<p>点击编辑答题选项进行设置</p>
+											</div>
+											<div class="quiz-preview">
+												
+											</div>
+										</div>
 									</div>
-									<a id="edit-quiz-options" class="btn btn-success" type="button" data-toggle="modal" data-target="#dlg-quiz-options"><?php _e('编辑答题选项'); ?></a>
+									<a id="edit-quiz-options" class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#dlg-quiz-options"><span class="glyphicon glyphicon-pencil"></span><?php _e(' 编辑答题选项'); ?></a>
 
 									<!-- 选项编辑对话框 -->
 									<div class="modal fade" id="dlg-quiz-options" tabindex="-1" role="dialog" aria-labelledby="dlg-quiz-option-label">
@@ -129,15 +136,17 @@
 											        </div>
 										        </div>
 										        <div id="quiz-countdown" class="col-xs-8">
-										        	<div class="col-xs-4 dlg-control">
-										        		<input id="enable-quiz-countdown" class="dlg-control" type="checkbox" name="enable-quiz-countdown"></input>
+										        	<div id="enable-quiz-countdown" class="col-xs-4 dlg-control">
+										        		<input class="dlg-control" type="checkbox" name="enable-quiz-countdown"></input>
 										        		<label>
 										        			<?php _e('限时答题'); ?>	
 										        		</label>
 										        	</div>
-										        	<div class="quiz-countdown-input col-xs-8">
-										        		<input id="quiz-countdown-value" class="form-control" type="text" name="quiz-countdown" value=""></input>
-										        		<label class="dlg-control"><?php _e('秒'); ?></label>
+										        	<div id="quiz-countdown-input" class="col-xs-8">
+										        		<div class="form-group">
+										        			<input id="quiz-countdown-value" class="form-control" type="text" name="quiz-countdown" value=""></input>
+										        			<label class="dlg-control"><?php _e('秒'); ?></label>	
+										        		</div>
 										        	</div>
 										        </div>
 									      	</div>
@@ -245,7 +254,7 @@
 									      	</div>
 									      </div>
 									      <div class="modal-footer">
-									        <button type="button" class="btn btn-primary" data-dismiss="modal"><?php _e('确认保存'); ?></button>
+									        <button id="quiz-options-save" type="button" class="btn btn-primary"><?php _e('确认保存'); ?></button>
 									      </div>
 									    </div>
 									  </div>
