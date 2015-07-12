@@ -7,3 +7,26 @@
 .quiz-single-selection .quiz-option .quiz-option-mark {
 	display: none;
 }
+
+.quiz-multiple-selection .quiz-option.checked .quiz-option-mark {
+	display: inline-block;
+	float: right;
+	color: #4cae4c;
+}
+
+.quiz-multiple-selection .quiz-option .quiz-option-mark {
+	display: none;
+}
+
+.quiz-word-board {
+	width: 400px;
+}
+
+.quiz-word-key, .quiz-answer-key {
+	width: 34px;
+	height: 34px;
+}
+
+.quiz-answer-board {
+	margin: 15px 0;
+}

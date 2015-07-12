@@ -67,17 +67,23 @@
         nkrQuiz.prototype.parseQuizOptionCrossWord = function (element, quizOptions) {
             var quizContent = '<div class="quiz-options"><div class="quiz-word-board">';
             for (var i = 0; i < quizOptions[0].content.length; i++) {
-                    quizContent += '<button class="quiz-word-key" data-index="' + i + '" data-word="' 
+                    if(i % 8 == 0) {
+                        if(i > 0) {
+                            quizContent += '</div>';
+                        }
+                        quizContent += '<div class="btn-group quiz-word-group">';
+                    }
+                    quizContent += '<button type="button" class="btn btn-default quiz-word-key" data-index="' + i + '" data-word="' 
                         + quizOptions[0].content[i] + '">' 
                         + quizOptions[0].content[i] + '</button>';
             }
             quizContent += '</div>';
 
-            quizContent += '<div class="quiz-answer-board">';
+            quizContent += '<div class="quiz-answer-board"><div class="btn-group quiz-word-group">';
             for (var i = 0; i < quizOptions[0].wordcount; i++) {
-                quizContent += '<button class="quiz-answer-key blank"></button>';
+                quizContent += '<button type="button" class="btn btn-default quiz-answer-key blank"></button>';
             }
-            quizContent += '</div></div>';
+            quizContent += '</div></div></div>';
             element.append(quizContent);
             
             function updateSubmitButtonStatus(element) {
@@ -220,12 +226,13 @@
         };
 
         nkrQuiz.prototype.parseQuizOptionMultipleSelection = function (element, quizOptions) {
-            var quizContent = '<div class="quiz-options"><ul class="quiz-multiple-selection">'
+            var quizContent = '<div class="quiz-options"><div class="list-group quiz-multiple-selection">'
             for (var i = 0; i < quizOptions.length; i++) {
-                quizContent += '<li class="quiz-option" data-index="' + i + '">' 
-                    + quizOptions[i].content + '</li>';
+                var indexTag = this.settings.alphabet[i % this.settings.alphabet.length];
+                quizContent += '<a class="list-group-item quiz-option" data-index="' + i + '"><span class="quiz-option-tag">' + 
+                    indexTag + '、</span><em>' + quizOptions[i].content + '</em><i class="quiz-option-mark glyphicon glyphicon-ok"></i></a>';;
             };
-            quizContent += '</ul></div>';
+            quizContent += '</div></div>';
             element.append(quizContent);
 
             function updateSubmitButtonStatus(element) {

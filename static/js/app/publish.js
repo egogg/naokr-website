@@ -254,8 +254,24 @@ $(function()
 	    return a.join('');
 	}
 
+	function UpdateCrosswordWordsHint() {
+		var crosswordAnswer = $('#quiz-option-crossword-answer').val().trim().replace(/\s+/g, '');
+		if(crosswordAnswer.length > 0) {
+			var crosswordWords = $('#quiz-option-crossword-words').val().trim().replace(/\s+/g, '');
+			var match = (crosswordWords.length == crosswordAnswer.length * 8);
+			var hint = '可选汉字个数<em class="' + (match ? 'match' : 'mismatch') + '">' + crosswordWords.length + 
+				'</em>/<em class="' + (match ? 'match' : 'mismatch') + '">' + crosswordAnswer.length * 8 + '</em>';
+			$('#quiz-option-crossword-words-hint').html(hint);
+		}
+	}
+
+	$('#quiz-option-crossword-words').on('input', function(){
+		UpdateCrosswordWordsHint();
+	});
+
 	$('#quiz-option-crossword-auto').on('click', function(e){
-		var answer = $('.quiz-option-crossword-answer input[name="quiz-option-crossword-answer"]').val().trim();
+		var answer = $('.quiz-option-crossword-answer input[name="quiz-option-crossword-answer"]')
+			.val().trim().replace(/\s+/g, '');
 
 		if(answer.length) {
 			var words = answer;
@@ -266,6 +282,7 @@ $(function()
 			};
 
 			$('.quiz-option-crossword-words textarea[name="quiz-option-crossword-words"]').val(words.shuffle());
+			UpdateCrosswordWordsHint();
 
 			DismissErrorMessage();
 		} else {
@@ -277,10 +294,11 @@ $(function()
 
 	$('#quiz-option-crossword-shuffle').on('click', function(e){
 		var wordsInput = $('.quiz-option-crossword-words textarea[name="quiz-option-crossword-words"]');
-		var words = wordsInput.val().trim();
+		var words = wordsInput.val().trim().replace(/\s+/g, '');
 
 		if(words.length) {
 			wordsInput.val(words.shuffle());
+			UpdateCrosswordWordsHint();
 		}
 
 		e.preventDefault();
@@ -325,7 +343,7 @@ $(function()
 
 		// 检查答题类型
 
-		var quizType = $('#quiz-type').attr('data-quiz-type');
+		var quizTypeId = $('#quiz-type').attr('data-quiz-type');
 		var countdown = 0;
 		if($('#quiz-countdown-input').is(':visible')) {
 			var countdownInput = $('#quiz-countdown-value').val().trim();
@@ -351,7 +369,7 @@ $(function()
 		var hasAnswer = false;
 		var options = [];
 		var answers = [];
-		if(quizType == 1) {
+		if(quizTypeId == 1) {
 			// 单项选择
 			$('.quiz-option-single').each(function(i, element){
 				var $elements = $(element).children();
@@ -388,7 +406,7 @@ $(function()
 
 			quizType = 'singleSelection';
 
-		} else if(quizType == 2) {
+		} else if(quizTypeId == 2) {
 			// 多项选择
 			$('.quiz-option-multiple').each(function(i, element){
 				var $elements = $(element).children();
@@ -423,9 +441,40 @@ $(function()
 
 			quizSummary  = '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">多选</span></div>';
 			quizType = 'multipleSelection';
-		} else if(quizType == 3) {
+		} else if(quizTypeId == 3) {
 			// 成语字谜
-		} else if(quizType == 4) {
+			var crosswordAnswerInput = $('#quiz-option-crossword-answer');
+			var crosswordAnswer = crosswordAnswerInput.val().trim().replace(/\s+/g, '');
+			if(!crosswordAnswer.length) {
+				crosswordAnswerInput.val(crosswordAnswer);
+				crosswordAnswerInput.focus();
+				ShowErrorMessage('请输入字谜答案');
+
+				return;
+			} else if(crosswordAnswer.length > 8) {
+				crosswordAnswerInput.focus();
+				crosswordAnswerInput.val(crosswordAnswer);
+				ShowErrorMessage('字谜长度请不要超过8');
+
+				return;
+			}
+
+			var crosswordWordsInput = $('#quiz-option-crossword-words');
+			var crosswordWords = crosswordWordsInput.val().trim().replace(/\s+/g, '');
+			if(crosswordWords.length != crosswordAnswer.length * 8) {
+				crosswordWordsInput.val(crosswordWords);
+				crosswordWordsInput.focus();
+				ShowErrorMessage('可选汉字长度必须为：' + crosswordAnswer.length + ' × 8 = ' + crosswordAnswer.length * 8);
+
+				return;
+			}
+
+			options = [{'content' : crosswordWords, 'wordcount' : crosswordAnswer.length}];
+			answers = [{'answer' : crosswordAnswer, 'score' : 10}];
+			quizSummary  = '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">字谜</span></div>';
+			quizType = 'crossword';
+
+		} else if(quizTypeId == 4) {
 
 		} else {
 			ShowErrorMessage('请选择答题类型');

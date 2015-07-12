@@ -85,6 +85,16 @@
   margin-bottom: 0;
 }
 
+#quiz-option-crossword-words-hint .match {
+  color: green;
+  padding: 0 6px;
+}
+
+#quiz-option-crossword-words-hint .mismatch {
+  color: red;
+  padding: 0 6px;
+}
+
 #quiz-option-crossword-auto, #quiz-option-crossword-shuffle {
   float: right;
   margin-left: 15px;

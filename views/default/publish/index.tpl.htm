@@ -83,11 +83,6 @@
 									  <option value="3" selected="selected">3</option>
 									  <option value="4">4</option>
 									  <option value="5">5</option>
-									  <option value="6">6</option>
-									  <option value="7">7</option>
-									  <option value="8">8</option>
-									  <option value="9">9</option>
-									  <option value="10">10</option>
 									</select>
 								</div>
 								<!-- end 问题难度 -->								
@@ -214,13 +209,13 @@
 														</li>
 														<li class="quiz-option-page hidden" data-quiz-type="3">
 															<div class="quiz-option-crossword-answer">
-																<input type="text" class="form-control" name="quiz-option-crossword-answer" placeholder="字谜答案">
-																<span class="text-color-999">您设计的字谜答案，一般不要超过6个汉字</span>
+																<input id="quiz-option-crossword-answer" type="text" class="form-control" name="quiz-option-crossword-answer" placeholder="字谜答案">
+																<span class="text-color-999">您设计的字谜答案，一般不要超过8个汉字</span>
 															</div>
 															<div class="quiz-option-crossword-words">
-																<textarea class="form-control" name="quiz-option-crossword-words" id="quiz-option-crossword-words" rows="4" placeholder="字谜可选汉字"></textarea>
+																<textarea id="quiz-option-crossword-words" class="form-control" name="quiz-option-crossword-words" id="quiz-option-crossword-words" rows="4" placeholder="字谜可选汉字"></textarea>
 																<div>
-																	<span class="text-color-999">可选汉字个数请控制为答案长度＊8</span>
+																	<span id="quiz-option-crossword-words-hint" class="text-color-999">可选汉字个数请控制为：答案长度 &times; 8</span>
 																	<a href="#" class="btn btn-success btn-sm" id="quiz-option-crossword-auto"><?php _e('随机生成'); ?></a>
 																	<a href="#" class="btn btn-success btn-sm" id="quiz-option-crossword-shuffle"><?php _e('打乱内容'); ?></a>
 																</div>
