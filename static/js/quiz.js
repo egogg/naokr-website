@@ -280,13 +280,13 @@
         };
 
         nkrQuiz.prototype.parseQuizOptionTextInput = function (element, quizOptions) {
-            var quizContent = '<div class="quiz-options"><form class="quiz-text-input">'
+            var quizContent = '<div class="quiz-options"><div class="quiz-text-input">'
             for (var i = 0; i < quizOptions.length; i++) {
-                quizContent += '<label>' + quizOptions[i].content +
-                    '<input type="text" class="quiz-input" data-index="' + i + 
-                    '"></input></label>';
+                quizContent += '<div class="form-group"><label>' + (i + 1) + '、' + quizOptions[i].content + '</label>' + 
+                    '<input type="text" class="quiz-input form-control" data-index="' + i + 
+                    '"></input></div>';
             };
-            quizContent += '</form></div>';
+            quizContent += '</div></div>';
             element.append(quizContent);
 
             function isAllFieldsSet(element) {

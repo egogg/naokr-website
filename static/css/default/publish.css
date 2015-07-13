@@ -77,6 +77,10 @@
   margin-bottom: 0px;
 }
 
+.quiz-word-group {
+  margin-top: -1px;
+}
+
 .quiz-option-crossword-answer {
   margin-bottom: 10px;
 }

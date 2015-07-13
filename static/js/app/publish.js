@@ -475,6 +475,41 @@ $(function()
 			quizType = 'crossword';
 
 		} else if(quizTypeId == 4) {
+			// 完形填空
+			$('.quiz-option-textinput').each(function(i, element){
+				var $elements = $(element).children();
+				var optionLabelInput = $($elements[0]).find('input');
+				var optionLabelValue = optionLabelInput.val().trim();
+				
+				if(!optionLabelValue.length) {
+					optionLabelInput.focus();
+					ShowErrorMessage('请输入填空的说明文字');
+
+					isValidOption = false;
+					return;
+				}
+
+				var optionAnswerInput = $($elements[1]).find('input');
+				var optionAnswerValue = optionAnswerInput.val().trim();
+
+				if(!optionAnswerValue.length) {
+					optionAnswerInput.focus();
+					ShowErrorMessage('请输入相应的答案');
+
+					isValidOption = false;
+					return;
+				}
+
+				options = options.concat({'content' : optionLabelValue});
+				answers = answers.concat({'answer': optionAnswerValue, 'score' : 10});
+			});
+
+			if(!isValidOption) {
+				return;
+			}
+
+			quizSummary  = '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">填空</span></div>';
+			quizType = 'textInput';
 
 		} else {
 			ShowErrorMessage('请选择答题类型');
