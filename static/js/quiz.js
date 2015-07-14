@@ -131,7 +131,7 @@
             });
 
             element.find('.quiz-word-board').on('click', '.quiz-word-key', $.proxy(function(e) {
-                var wordKey = $(e.target);
+                var wordKey = $(e.currentTarget);
                 if(!wordKey.hasClass('checked')) {
                     var answerKey = this.$element.find('.quiz-answer-board .quiz-answer-key.blank:first');
 
@@ -152,7 +152,7 @@
             }, this));
 
             element.find('.quiz-answer-board').on('click', '.quiz-answer-key', $.proxy(function(e){
-                var answerKey = $(e.target);
+                var answerKey = $(e.currentTarget);
                 if(!answerKey.hasClass('blank')) {
                     var wordKey = element.find('.quiz-word-board .quiz-word-key[data-index="' + 
                         answerKey.attr('data-word-index') + '"]');
@@ -215,7 +215,7 @@
             });
 
             element.find('.quiz-single-selection').on('click', '.quiz-option', $.proxy(function (e) {
-                $(e.target)
+                $(e.currentTarget)
                     .addClass('checked')
                     .siblings('.quiz-option').removeClass('checked');
 
@@ -272,7 +272,7 @@
             });
 
             element.find('.quiz-multiple-selection').on('click', '.quiz-option', $.proxy(function (e) {
-                $(e.target).toggleClass('checked');
+                $(e.currentTarget).toggleClass('checked');
                 updateSubmitButtonStatus(element);
 
                 e.preventDefault();

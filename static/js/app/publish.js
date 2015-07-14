@@ -114,7 +114,10 @@ $(function()
 
 	// 解析答案
 
-	$('#quiz-content').val('{"type":"singleSelection","countdown":"90","description":"","options":[{"content":"单选一"},{"content":"单选二"},{"content":"单选三"},{"content":"单选四"}],"answers":[{"answer":true,"score":10},{"answer":false,"score":0},{"answer":false,"score":0},{"answer":false,"score":0}]}');
+	// $('#quiz-content').val('{"type":"singleSelection","countdown":"90","description":"","options":[{"content":"单选一"},{"content":"单选二"},{"content":"单选三"},{"content":"单选四"}],"answers":[{"answer":true,"score":10},{"answer":false,"score":0},{"answer":false,"score":0},{"answer":false,"score":0}]}');
+	// $('#quiz-content').val('{"type":"multipleSelection","countdown":"90","description":"","options":[{"content":"多选一"},{"content":"多选二"},{"content":"多选三"},{"content":"多选四"}],"answers":[{"answer":true,"score":10},{"answer":false,"score":0},{"answer":true,"score":10},{"answer":false,"score":0}]}');
+	// $('#quiz-content').val('{"type":"crossword","countdown":"90","description":"","options":[{"content":"碃批接次律差个修人起皮宫森而拿价终究孩玛程音那好脚妻一冰醒层妈治","wordcount":4}],"answers":[{"answer":"一个好人","score":10}]}');
+	// $('#quiz-content').val('{"type":"textInput","countdown":"90","description":"","options":[{"content":"填空说明一"},{"content":"填空说明二"}],"answers":[{"answer":"答案一","score":10},{"answer":"填空二","score":10}]}');
 
 	var icheckOption = {
 		checkboxClass: 'icheckbox_square-blue',
@@ -160,6 +163,8 @@ $(function()
 	}
 
 	$('#edit-quiz-options').on('click', function(e) {
+		DismissErrorMessage();
+		
 		var IS_JSON = true;
 		try {
 			var quizContent = $.parseJSON($('#quiz-content').val());	
@@ -200,6 +205,53 @@ $(function()
 					$(quizOptions).insertBefore('.quiz-option-single-list .quiz-option-single-add');
 					$('.quiz-option-single-list').iCheck(icheckOption);
 				}
+			}
+			else if(quizContent.type == 'multipleSelection') {
+				quizTypeId = 2;
+
+				var quizOptions = '';
+				if(quizContent.options.length >= 2) {
+					$('.quiz-option-multiple').remove();
+					for (var i = 0; i < quizContent.options.length; i++) {
+						quizOptions += '<tr class="quiz-option-multiple">' + 
+							'<td><input type="text" class="form-control" placeholder="输入答题选项" value="' + 
+							quizContent.options[i].content + '"></td>' +
+							'<td><input class="dlg-control" type="checkbox" name="quiz-option-single-answer"' + 
+							(quizContent.answers[i].answer ? 'checked' : '') + '></td>' +
+							'<td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>' +
+							'</tr>';
+					};
+					$(quizOptions).insertBefore('.quiz-option-multiple-list .quiz-option-multiple-add');
+					$('.quiz-option-multiple-list').iCheck(icheckOption);
+				}
+			}
+			else if(quizContent.type == 'crossword') {
+				quizTypeId = 3;
+
+				var quizOptions = '';
+				if(quizContent.options.length == 1) {
+					$('#quiz-option-crossword-words').val(quizContent.options[0].content);
+					$('#quiz-option-crossword-answer').val(quizContent.answers[0].answer);
+					UpdateCrosswordWordsHint();
+				}
+			}
+			else if(quizContent.type == 'textInput') {
+				quizTypeId = 4;
+
+				var quizOptions = '';
+				if(quizContent.options.length >= 1 ) {
+					$('.quiz-option-textinput').remove();
+
+					for (var i = 0; i < quizContent.options.length; i++) {
+						quizOptions += '<tr class="quiz-option-textinput">' +
+							'<td><input class="form-control" type="text" placeholder="填空标签" data-textinput-field="label" value ="' + quizContent.options[i].content + 
+							'"></td><td><input class="form-control" type="text" placeholder="填空答案" data-textinput-field="answer" value="' + 
+							quizContent.answers[i].answer + 
+							'"></td><td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td></tr>';
+					};
+				}
+
+				$(quizOptions).insertBefore('.quiz-option-textinput-list .quiz-option-textinput-add');
 			}
 
 			if(quizTypeId > 0) {
