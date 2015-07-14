@@ -114,10 +114,113 @@ $(function()
 
 	// 解析答案
 
-	// $('.quiz-preview').nkrQuiz({
- //        "mode" : "single",
- //        "data" : $.parseJSON($('#quiz-content').val())
- //    });
+	$('#quiz-content').val('{"type":"singleSelection","countdown":"90","description":"","options":[{"content":"单选一"},{"content":"单选二"},{"content":"单选三"},{"content":"单选四"}],"answers":[{"answer":true,"score":10},{"answer":false,"score":0},{"answer":false,"score":0},{"answer":false,"score":0}]}');
+
+	var icheckOption = {
+		checkboxClass: 'icheckbox_square-blue',
+		radioClass: 'iradio_square-blue',
+		increaseArea: '20%'
+	};
+
+	var IS_JSON = true;
+	try {
+		var quizContent = $.parseJSON($('#quiz-content').val());	
+	}
+	catch (err) {
+		IS_JSON = false;
+	}
+
+	if(IS_JSON) {
+		var quizType = '';
+		if(quizContent.type == 'singleSelection') {
+			quizType = '单选';
+		}
+		else if(quizContent.type == 'multipleSelection') {
+			quizType = '多选';
+		}
+		else if(quizContent.type == 'crossword') {
+			quizType = '字谜';
+		}
+		else if(quizContent.type == 'textInput') {
+			quizType = '填空';
+		}
+
+		quizSummary  = '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">' + 
+			quizType + '</span></div>';
+		if(quizContent.countdown > 0) {
+			quizSummary += '<div><i class="glyphicon glyphicon-time"></i>限时：<strong>' + quizContent.countdown + '</strong> 秒</div>';
+		}
+
+		$('#quiz-summary').html(quizSummary);
+
+		$('.quiz-preview').nkrQuiz({
+			'mode' : 'single',
+			'data' : quizContent
+		});
+	}
+
+	$('#edit-quiz-options').on('click', function(e) {
+		var IS_JSON = true;
+		try {
+			var quizContent = $.parseJSON($('#quiz-content').val());	
+		}
+		catch (err) {
+			IS_JSON = false;
+		}
+		
+		if(IS_JSON) {
+
+			// countdown
+
+			if(quizContent.countdown > 0) {
+				$('#enable-quiz-countdown input[name="enable-quiz-countdown"]').prop('checked', true);
+				$('#enable-quiz-countdown').iCheck('update');
+
+				$('#quiz-countdown-value').val(quizContent.countdown);
+				$('#quiz-countdown-input').show();
+			}
+
+			var quizTypeControl = $('#quiz-type');
+			var quizTypeId = 0;
+			if(quizContent.type == 'singleSelection') {
+				quizTypeId = 1;
+				
+				var quizOptions = '';
+				if(quizContent.options.length >= 2) {
+					$('.quiz-option-single').remove();
+					for (var i = 0; i < quizContent.options.length; i++) {
+						quizOptions += '<tr class="quiz-option-single">' + 
+							'<td><input type="text" class="form-control" placeholder="输入答题选项" value="' + 
+							quizContent.options[i].content + '"></td>' +
+							'<td><input class="dlg-control" type="radio" name="quiz-option-single-answer"' + 
+							(quizContent.answers[i].answer ? 'checked' : '') + '></td>' +
+							'<td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>' +
+							'</tr>';
+					};
+					$(quizOptions).insertBefore('.quiz-option-single-list .quiz-option-single-add');
+					$('.quiz-option-single-list').iCheck(icheckOption);
+				}
+			}
+
+			if(quizTypeId > 0) {
+				quizTypeControl.attr('data-quiz-type', quizTypeId);
+				quizTypeControl.find('.quiz-type-select')
+					.text(quizTypeControl.find('.dropdown-menu li a[data-quiz-type="' + quizTypeId + '"]').text());
+				var optionPage = $('.quiz-option-pages li.quiz-option-page[data-quiz-type="' + quizTypeId + '"]');
+				if(optionPage.length) {
+		  			$(optionPage)
+		  				.removeClass('hidden')
+		  				.siblings('.quiz-option-page').addClass('hidden');
+		  		}
+		  		else
+		  		{
+					$('.quiz-option-pages li.quiz-option-page.default-page')
+						.removeClass('hidden')
+						.siblings('.quiz-option-page').addClass('hidden');  			
+		  		}
+			}
+		}
+	});
 
 	// 答题选项编辑对话框
 
@@ -135,11 +238,7 @@ $(function()
 			.find('em').text('');
 	}
 
-	$('input.dlg-control').iCheck({
-		checkboxClass: 'icheckbox_square-blue',
-		radioClass: 'iradio_square-blue',
-		increaseArea: '20%'
-	});
+	$('input.dlg-control').iCheck(icheckOption);
 
 	$('#enable-quiz-countdown').on('ifChecked', function(){
 		$('#quiz-countdown-input').show().find('input').focus();
@@ -185,11 +284,7 @@ $(function()
 				'<td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>' +
 				'</tr>')
 				.insertAfter(options[optionCount - 1])
-				.iCheck({
-					checkboxClass: 'icheckbox_square-blue',
-					radioClass: 'iradio_square-blue',
-					increaseArea: '20%'
-				});
+				.iCheck(icheckOption);
 		}
 
 		e.preventDefault();
@@ -217,11 +312,7 @@ $(function()
 				'<td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>' +
 				'</tr>')
 				.insertAfter(options[optionCount - 1])
-				.iCheck({
-					checkboxClass: 'icheckbox_square-blue',
-					radioClass: 'iradio_square-blue',
-					increaseArea: '20%'
-				});
+				.iCheck(icheckOption);
 		}
 
 		e.preventDefault();
