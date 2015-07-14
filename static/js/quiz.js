@@ -65,21 +65,14 @@
         };
 
         nkrQuiz.prototype.parseQuizOptionCrossWord = function (element, quizOptions) {
-            var quizContent = '<div class="quiz-options"><div class="quiz-word-board">';
+            var quizContent = '<div class="quiz-options"><div class="quiz-word-board"><div class="btn-group quiz-word-group">';
             for (var i = 0; i < quizOptions[0].content.length; i++) {
-                    if(i % 8 == 0) {
-                        if(i > 0) {
-                            quizContent += '</div>';
-                        }
-                        quizContent += '<div class="btn-group quiz-word-group">';
-                    }
                     quizContent += '<button type="button" class="btn btn-default quiz-word-key" data-index="' + i + '" data-word="' 
                         + quizOptions[0].content[i] + '">' 
                         + quizOptions[0].content[i] + '</button>';
             }
-            quizContent += '</div>';
 
-            quizContent += '<div class="quiz-answer-board"><div class="btn-group quiz-word-group">';
+            quizContent += '</div><div class="quiz-answer-board"><div class="btn-group quiz-word-group">';
             for (var i = 0; i < quizOptions[0].wordcount; i++) {
                 quizContent += '<button type="button" class="btn btn-default quiz-answer-key blank"></button>';
             }

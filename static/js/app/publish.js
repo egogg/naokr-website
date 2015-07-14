@@ -181,7 +181,7 @@ $(function()
 				$('#enable-quiz-countdown input[name="enable-quiz-countdown"]').prop('checked', true);
 				$('#enable-quiz-countdown').iCheck('update');
 
-				$('#quiz-countdown-value').val(quizContent.countdown);
+				$('#quiz-countdown-input').val(quizContent.countdown);
 				$('#quiz-countdown-input').show();
 			}
 
@@ -489,7 +489,8 @@ $(function()
 		var quizTypeId = $('#quiz-type').attr('data-quiz-type');
 		var countdown = 0;
 		if($('#quiz-countdown-input').is(':visible')) {
-			var countdownInput = $('#quiz-countdown-value').val().trim();
+			var countdownInputControl = $('#quiz-countdown-input');
+			var countdownInput = countdownInputControl.val().trim();
 
 			if(Math.floor(countdownInput) == countdownInput && $.isNumeric(countdownInput)) {
 				countdown = countdownInput;
@@ -499,7 +500,7 @@ $(function()
 				}
 			}
 			else {
-				$('#quiz-countdown-value').focus();
+				countdownInputControl.focus();
 				ShowErrorMessage('请输入有效的答题时限');
 
 				return;
@@ -594,10 +595,10 @@ $(function()
 				ShowErrorMessage('请输入字谜答案');
 
 				return;
-			} else if(crosswordAnswer.length > 8) {
+			} else if(crosswordAnswer.length > 5) {
 				crosswordAnswerInput.focus();
 				crosswordAnswerInput.val(crosswordAnswer);
-				ShowErrorMessage('字谜长度请不要超过8');
+				ShowErrorMessage('字谜长度请不要超过5');
 
 				return;
 			}

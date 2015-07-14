@@ -19,10 +19,17 @@
 }
 
 .quiz-word-board {
-	width: 400px;
+	max-width: 350px;
 }
 
-.quiz-word-key, .quiz-answer-key {
+.quiz-word-key {
+	width: 40px;
+	height: 40px;
+	border-radius: 0 !important;
+  	margin: -1px 0 0 -1px !important;
+}
+
+.quiz-answer-key {
 	width: 40px;
 	height: 40px;
 }
