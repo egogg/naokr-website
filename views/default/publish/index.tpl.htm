@@ -76,8 +76,9 @@
 								<!-- end 问题补充 -->
 
 								<h3><?php _e('问题难度系数'); ?>:</h3>
+								<input id="question_difficulty" type="hidden" name="question_difficulty" value=""></input>
 								<div class='question-difficulty'>
-									<select id="question-difficulty" name="question-difficulty">
+									<select id="question-difficulty-control">
 									  <option value="1">1</option>
 									  <option value="2">2</option>
 									  <option value="3" selected="selected">3</option>
@@ -89,7 +90,7 @@
 								<!-- end 问题难度 -->								
 
 								<h3><?php _e('答题选项（可选）'); ?>:</h3>
-								<input id="quiz-content" type="hidden" name="quiz-content" value=""></input>
+								<input id="quiz_content" type="hidden" name="quiz_content" value=""></input>
 								<div class="quiz-content-container">
 									<div class="panel panel-default">
 										<div class="panel-body">

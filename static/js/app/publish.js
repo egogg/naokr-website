@@ -109,15 +109,17 @@ $(function()
 	});
 
 	// 难度控件
-
-	$('#question-difficulty').barrating();
+	
+	$('#question-difficulty-control').barrating('show', {
+        wrapperClass: 'br-wrapper',
+        initialRating: $('#question_difficulty').val(),
+        showSelectedRating: true,
+        onSelect: function(value, text) {
+            $('#question_difficulty').val(value);
+        }
+	});
 
 	// 解析答案
-
-	// $('#quiz-content').val('{"type":"singleSelection","countdown":"90","description":"","options":[{"content":"单选一"},{"content":"单选二"},{"content":"单选三"},{"content":"单选四"}],"answers":[{"answer":true,"score":10},{"answer":false,"score":0},{"answer":false,"score":0},{"answer":false,"score":0}]}');
-	// $('#quiz-content').val('{"type":"multipleSelection","countdown":"90","description":"","options":[{"content":"多选一"},{"content":"多选二"},{"content":"多选三"},{"content":"多选四"}],"answers":[{"answer":true,"score":10},{"answer":false,"score":0},{"answer":true,"score":10},{"answer":false,"score":0}]}');
-	// $('#quiz-content').val('{"type":"crossword","countdown":"90","description":"","options":[{"content":"碃批接次律差个修人起皮宫森而拿价终究孩玛程音那好脚妻一冰醒层妈治","wordcount":4}],"answers":[{"answer":"一个好人","score":10}]}');
-	// $('#quiz-content').val('{"type":"textInput","countdown":"90","description":"","options":[{"content":"填空说明一"},{"content":"填空说明二"}],"answers":[{"answer":"答案一","score":10},{"answer":"填空二","score":10}]}');
 
 	var icheckOption = {
 		checkboxClass: 'icheckbox_square-blue',
@@ -127,7 +129,7 @@ $(function()
 
 	var IS_JSON = true;
 	try {
-		var quizContent = $.parseJSON($('#quiz-content').val());	
+		var quizContent = $.parseJSON($('#quiz_content').val());	
 	}
 	catch (err) {
 		IS_JSON = false;
@@ -167,7 +169,7 @@ $(function()
 		
 		var IS_JSON = true;
 		try {
-			var quizContent = $.parseJSON($('#quiz-content').val());	
+			var quizContent = $.parseJSON($('#quiz_content').val());	
 		}
 		catch (err) {
 			IS_JSON = false;
@@ -675,12 +677,12 @@ $(function()
 			'answers' : answers
 		};
 
-		$('#quiz-content').val(JSON.stringify(quizItem));
+		$('#quiz_content').val(JSON.stringify(quizItem));
 		$('#quiz-summary').html(quizSummary);
 		$('.quiz-preview').nkrQuiz({
 	        "mode" : "single",
 	        "showSubmit" : false,
-	        "data" : $.parseJSON($('#quiz-content').val())
+	        "data" : $.parseJSON($('#quiz_content').val())
 	    });
 		$('#dlg-quiz-options').modal('hide');
 

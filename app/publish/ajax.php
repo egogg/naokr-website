@@ -438,6 +438,20 @@ class ajax extends AWS_CONTROLLER
             H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('请填写正确的验证码')));
         }
 
+        // 检查并在数据库中添加question_quiz组件
+
+        $quiz_id = 0;
+        if($_POST['quiz_content'])
+        {
+            $quiz = json_decode($_POST['quiz_content'], true);
+            if (!(json_last_error() === JSON_ERROR_NONE))
+            {
+                H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('请重新编辑答题选项')));
+            }
+            
+            $quiz_id = $this->model('quiz')->save_question_quiz($quiz['type'], $quiz['countdown'], $_POST['quiz_content']);
+        }
+        
         if ($_POST['topics'])
         {
             foreach ($_POST['topics'] AS $key => $topic_title)
@@ -578,7 +592,7 @@ class ajax extends AWS_CONTROLLER
         }
         else
         {
-            $question_id = $this->model('publish')->publish_question($_POST['question_content'], $_POST['question_detail'], $_POST['category_id'], $this->user_id, $_POST['topics'], $_POST['anonymous'], $_POST['attach_access_key'], $_POST['ask_user_id'], $this->user_info['permission']['create_topic']);
+            $question_id = $this->model('publish')->publish_question($_POST['question_content'], $_POST['question_detail'], $_POST['category_id'], $this->user_id, $_POST['question_difficulty'], $quiz_id, $_POST['topics'], $_POST['anonymous'], $_POST['attach_access_key'], $_POST['ask_user_id'], $this->user_info['permission']['create_topic']);
 
             if ($_POST['_is_mobile'])
             {

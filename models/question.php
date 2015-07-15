@@ -114,7 +114,7 @@ class question_class extends AWS_MODEL
 	 *
 	 * @return boolean true|false
 	 */
-	public function save_question($question_content, $question_detail, $published_uid, $anonymous = 0, $ip_address = null, $from = null)
+	public function save_question($question_content, $question_detail, $published_uid, $question_difficulty, $quiz_id, $anonymous = 0, $ip_address = null, $from = null)
 	{
 		if (!$ip_address)
 		{
@@ -129,6 +129,8 @@ class question_class extends AWS_MODEL
 			'add_time' => $now,
 			'update_time' => $now,
 			'published_uid' => intval($published_uid),
+			'difficulty' => intval($question_difficulty),
+			'quiz_id' => intval($quiz_id),
 			'anonymous' => intval($anonymous),
 			'ip' => ip2long($ip_address)
 		);
