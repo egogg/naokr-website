@@ -109,7 +109,7 @@ $(function()
 	});
 
 	// 难度控件
-	
+
 	$('#question-difficulty-control').barrating('show', {
         wrapperClass: 'br-wrapper',
         initialRating: $('#question_difficulty').val(),
@@ -530,6 +530,18 @@ $(function()
 					return;
 				}
 
+				// 检查重复选项
+
+				for (var i = 0; i < options.length; i++) {
+					if(optionValue == options[i]['content']) {
+						optionInput.focus();
+						ShowErrorMessage('请不要输入重复的答题选项');
+
+						isValidOption = false;
+						return;
+					}
+				};
+
 				options = options.concat({'content' : optionValue});
 
 				var isAnswer = $($elements[1]).find('.iradio_square-blue').hasClass('checked');
@@ -566,6 +578,18 @@ $(function()
 					isValidOption = false;
 					return;
 				}
+
+				// 检测重复选项
+
+				for (var i = 0; i < options.length; i++) {
+					if(optionValue == options[i]['content']) {
+						optionInput.focus();
+						ShowErrorMessage('请不要输入重复的答题选项');
+
+						isValidOption = false;
+						return;
+					}
+				};
 
 				options = options.concat({'content' : optionValue});
 
@@ -645,6 +669,18 @@ $(function()
 					isValidOption = false;
 					return;
 				}
+
+				// 检测重复选项
+
+				for (var i = 0; i < options.length; i++) {
+					if(optionLabelValue == options[i]['content']) {
+						optionLabelInput.focus();
+						ShowErrorMessage('请不要输入重复的答题选项');
+
+						isValidOption = false;
+						return;
+					}
+				};
 
 				options = options.concat({'content' : optionLabelValue});
 				answers = answers.concat({'answer': optionAnswerValue, 'score' : 10});

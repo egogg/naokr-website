@@ -50,4 +50,9 @@ class quiz_class extends AWS_MODEL
 			'content' => $quiz_content
 		));
 	}
+
+	public function get_question_quiz_info_by_id($quiz_id)
+	{
+		return $this->fetch_row('question_quiz', 'id = ' . intval($quiz_id));
+	}
 }

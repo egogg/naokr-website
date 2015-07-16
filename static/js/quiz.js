@@ -377,7 +377,7 @@
 
                 if(typeof options.showSubmit != 'undefined' && options.showSubmit) {
                     quizContent = '<div class="quiz-submit">';
-                    quizContent += '<button class="quiz-submit-answer" disabled>' 
+                    quizContent += '<button class="btn btn-success btn-normal quiz-submit-answer" disabled>' 
                         + this.settings.submitAnswerText + '</button>';
                     quizContent += '</div>';
                     this.$element.append(quizContent);

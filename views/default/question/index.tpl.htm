@@ -107,6 +107,12 @@
 						<div class="mod-body">
 							<div class="content markitup-box">
 								<?php echo $this->question_info['question_detail']; ?>
+								<!-- 答题选项 -->
+								<?php if($this->question_quiz) { ?>
+									<div class="question-quiz">
+										
+									</div>
+								<?php } ?>
 
 								<?php if ($this->question_info['attachs']) {  ?>
 								<div class="aw-upload-img-list">
@@ -623,6 +629,7 @@
 	var USER_ANSWERED = '<?php echo $this->user_answered; ?>';
 	var UPLOAD_ENABLE = '<?php echo get_setting('upload_enable') ?>';
 	var ANSWER_TYPE = 'answer';
+	var QUESTION_QUIZ = <?php echo $this->question_quiz['content']; ?>;
 </script>
 
 <script type="text/javascript" src="<?php echo G_STATIC_URL; ?>/js/app/question_detail.js"></script>
